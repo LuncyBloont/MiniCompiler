@@ -1,0 +1,65 @@
+<Program> ==> <SubProgram>									CSDO MKMEM
+
+# <SubProgram> ==> [<ConstVar>][<NormalVar>][<FunctionVar>]<RunableCode>
+<SubProgram> ==> <ConstVar> <A>|<A>					CSDO TABLE|TABLE
+<A> ==> <NormalVar> <B>|<B>						CSDO
+<B> ==> <FunctionVar> <RunableCode>|<RunableCode>					CSDO
+
+# <ConstVar> ==> CONST<ConstDefine>{,<ConstDefine>};
+<ConstVar> ==> const <ConstDefine> <C> ;           	CSDO
+<C> ==> __0__|, <ConstDefine> <C>                     	CSDO
+
+<ConstDefine> ==> <ID> = <UInt>					CSDO TESTNDEF(0) DEFC(0,2)
+
+# <UInt> ==> <SingleNumber>{<SingleNumber>}
+<UInt> ==> <SingleNumber> <D>                        	CSDO 
+<D> ==> __0__|<SingleNumber> <D>								CSDO
+
+# <NormalVar> ==> VAR<ID>{,<ID>};			
+<NormalVar> ==> var <ID> <E> ;					CSDO TESTNDEF(1) DEF(1)
+<E> ==> __0__|, <ID> <E>							CSDO |TESTNDEF(1) DEF(1)
+
+# <ID> ==> <Alpha>{<Alpha>|<SingleNumber>}
+<ID> ==> <Alpha> <F>								CSDO
+<F> ==> __0__|<Alpha> <F>|<SingleNumber> <F>					CSDO
+
+# <FunctionVar> ==> <FunctionHead><SubProgram>;{<FunctionVar>}
+<FunctionVar> ==> <FunctionHead> <SubProgram> ; <G>				CSDO
+<G> ==> __0__|<FunctionHead> <SubProgram> ; <G>					CSDO POPTABLE|
+
+<FunctionHead> ==> procedure <ID> ;						CSDO TESTNDEF(1) DEFF(1)
+<RunableCode> ==> <Set>|<Condition>|<WhileLoop>|<Call>|<Read>|<Write>|<MultiCode>|__0__     CSDO
+<Set> ==> <ID> := <Expression>						CSDO TESTDEF(0) TESTM(0)
+
+# <MultiCode> ==> begin<RunableCode>{ ;<RunableCode>}end
+<MultiCode> ==> begin <RunableCode> <H> end						CSDO TABLE
+<H> ==> __0__|; <RunableCode> <H>								CSDO POPTABLE|
+
+<ConditionExpression> ==> <Expression> <RelationalOps> <Expression>|odd <Expression>     CSDO
+
+# <Expression> ==> [+|-]<Item>{<AddOrSub><Item>}
+<Expression> ==> + <Item> <I>|- <Item> <I>|<Item> <I>				CSDO
+<I> ==> __0__|<AddOrSub> <Item> <I>						CSDO
+
+# <Item> ==> <Factor>{<MulOrDiv><Factor>}
+<Item> ==> <Factor> <J>										CSDO
+<J> ==> __0__|<MulOrDiv> <Factor> <J>						CSDO
+
+<Factor> ==> <ID>|<UInt>|( <Expression> )				CSDO TESTDEF(0)||
+<AddOrSub> ==> +|-										CSDO
+<MulOrDiv> ==> *|/										CSDO
+<RelationalOps> ==> =|#|<|<=|>|>=							CSDO
+<Condition> ==> if <ConditionExpression> then <RunableCode>						CSDO
+<Call> ==> call <ID>							CSDO TESTDEF(1)
+<WhileLoop> ==> while <ConditionExpression> do <RunableCode>					CSDO     
+
+# <Read> ==> read(<ID>{,<ID>})
+<Read> ==> read ( <ID> <K> )						CSDO TESTDEF(2)
+<K> ==> __0__|, <ID> <K>							CSDO |TESTNDEF(1)
+
+# <Write> ==> write(<ID>{,<ID>})
+<Write> ==> write ( <ID> <K> )						CSDO TESTDEF(2)
+
+<Alpha> ==> a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z    CSDO
+<SingleNumber> ==> 0|1|2|3|4|5|6|7|8|9							CSDO
+

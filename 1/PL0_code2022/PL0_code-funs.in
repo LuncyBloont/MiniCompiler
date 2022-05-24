@@ -1,0 +1,27 @@
+const a=10;
+var b,c;
+procedure p;
+  procedure n3;
+      const c = 35;
+      var a, x;
+    begin
+      // c := 12;
+      x := 6;
+      a := a * c + x;
+      if a <= 1024 then
+      begin
+        call n3;
+      end;
+    end;
+begin
+  c:=b+a
+end;
+begin
+  read(b);
+  while b#0 do
+    begin
+      call  p;
+      write(c);
+      read(b);
+    end
+end.

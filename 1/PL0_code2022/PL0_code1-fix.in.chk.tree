@@ -1,0 +1,160 @@
+<Program> ==> <SubProgram>   CSDO 
+	<SubProgram> ==> <ConstVar> <A>   CSDO TABLE
+		<ConstVar> ==> const <ConstDefine> <C> ;   CSDO 
+			const      
+			<ConstDefine> ==> <ID> = <UInt>   CSDO TESTNDEF(0) DEFC(0,2)
+				<ID> ==> <Alpha> <F>   CSDO 
+					<Alpha> ==> a   CSDO 
+						a      
+					<F> ==>    CSDO 
+				=      
+				<UInt> ==> <SingleNumber> <D>   CSDO 
+					<SingleNumber> ==> 1   CSDO 
+						1      
+					<D> ==> <SingleNumber> <D>   CSDO 
+						<SingleNumber> ==> 0   CSDO 
+							0      
+						<D> ==>    CSDO 
+			<C> ==>    CSDO 
+			;      
+		<A> ==> <NormalVar> <B>   CSDO 
+			<NormalVar> ==> var <ID> <E> ;   CSDO TESTNDEF(1) DEF(1)
+				var      
+				<ID> ==> <Alpha> <F>   CSDO 
+					<Alpha> ==> b   CSDO 
+						b      
+					<F> ==>    CSDO 
+				<E> ==> , <ID> <E>   CSDO TESTNDEF(1) DEF(1)
+					,      
+					<ID> ==> <Alpha> <F>   CSDO 
+						<Alpha> ==> c   CSDO 
+							c      
+						<F> ==>    CSDO 
+					<E> ==>    CSDO 
+				;      
+			<B> ==> <FunctionVar> <RunableCode>   CSDO 
+				<FunctionVar> ==> <FunctionHead> <SubProgram> ; <G>   CSDO 
+					<FunctionHead> ==> procedure <ID> ;   CSDO TESTNDEF(1) DEFF(1)
+						procedure      
+						<ID> ==> <Alpha> <F>   CSDO 
+							<Alpha> ==> p   CSDO 
+								p      
+							<F> ==>    CSDO 
+						;      
+					<SubProgram> ==> <A>   CSDO TABLE
+						<A> ==> <B>   CSDO 
+							<B> ==> <RunableCode>   CSDO 
+								<RunableCode> ==> <MultiCode>   CSDO 
+									<MultiCode> ==> begin <RunableCode> <H> end   CSDO TABLE
+										begin      
+										<RunableCode> ==> <Set>   CSDO 
+											<Set> ==> <ID> := <Expression>   CSDO SET(0,1) TESTDEF(0)
+												<ID> ==> <Alpha> <F>   CSDO 
+													<Alpha> ==> c   CSDO 
+														c      
+													<F> ==>    CSDO 
+												:=      
+												<Expression> ==> <Item> <I>   CSDO 
+													<Item> ==> <Factor> <J>   CSDO 
+														<Factor> ==> <ID>   CSDO TESTDEF(0)
+															<ID> ==> <Alpha> <F>   CSDO 
+																<Alpha> ==> b   CSDO 
+																	b      
+																<F> ==>    CSDO 
+														<J> ==>    CSDO 
+													<I> ==> <AddOrSub> <Item> <I>   CSDO 
+														<AddOrSub> ==> +   CSDO 
+															+      
+														<Item> ==> <Factor> <J>   CSDO 
+															<Factor> ==> <ID>   CSDO TESTDEF(0)
+																<ID> ==> <Alpha> <F>   CSDO 
+																	<Alpha> ==> a   CSDO 
+																		a      
+																	<F> ==>    CSDO 
+															<J> ==>    CSDO 
+														<I> ==>    CSDO 
+										<H> ==>    CSDO POPTABLE
+										end      
+					;      
+					<G> ==>    CSDO POPTABLE
+				<RunableCode> ==> <MultiCode>   CSDO 
+					<MultiCode> ==> begin <RunableCode> <H> end   CSDO TABLE
+						begin      
+						<RunableCode> ==> <Read>   CSDO 
+							<Read> ==> read ( <ID> <K> )   CSDO TESTDEF(2)
+								read      
+								(      
+								<ID> ==> <Alpha> <F>   CSDO 
+									<Alpha> ==> b   CSDO 
+										b      
+									<F> ==>    CSDO 
+								<K> ==>    CSDO 
+								)      
+						<H> ==> ; <RunableCode> <H>   CSDO 
+							;      
+							<RunableCode> ==> <WhileLoop>   CSDO 
+								<WhileLoop> ==> while <ConditionExpression> do <RunableCode>   CSDO 
+									while      
+									<ConditionExpression> ==> <Expression> <RelationalOps> <Expression>   CSDO 
+										<Expression> ==> <Item> <I>   CSDO 
+											<Item> ==> <Factor> <J>   CSDO 
+												<Factor> ==> <ID>   CSDO TESTDEF(0)
+													<ID> ==> <Alpha> <F>   CSDO 
+														<Alpha> ==> b   CSDO 
+															b      
+														<F> ==>    CSDO 
+												<J> ==>    CSDO 
+											<I> ==>    CSDO 
+										<RelationalOps> ==> #   CSDO 
+											#      
+										<Expression> ==> <Item> <I>   CSDO 
+											<Item> ==> <Factor> <J>   CSDO 
+												<Factor> ==> <UInt>   CSDO 
+													<UInt> ==> <SingleNumber> <D>   CSDO 
+														<SingleNumber> ==> 0   CSDO 
+															0      
+														<D> ==>    CSDO 
+												<J> ==>    CSDO 
+											<I> ==>    CSDO 
+									do      
+									<RunableCode> ==> <MultiCode>   CSDO 
+										<MultiCode> ==> begin <RunableCode> <H> end   CSDO TABLE
+											begin      
+											<RunableCode> ==> <Call>   CSDO 
+												<Call> ==> call <ID>   CSDO TESTDEF(1)
+													call      
+													<ID> ==> <Alpha> <F>   CSDO 
+														<Alpha> ==> p   CSDO 
+															p      
+														<F> ==>    CSDO 
+											<H> ==> ; <RunableCode> <H>   CSDO 
+												;      
+												<RunableCode> ==> <Write>   CSDO 
+													<Write> ==> write ( <ID> <K> )   CSDO TESTDEF(2)
+														write      
+														(      
+														<ID> ==> <Alpha> <F>   CSDO 
+															<Alpha> ==> c   CSDO 
+																c      
+															<F> ==>    CSDO 
+														<K> ==>    CSDO 
+														)      
+												<H> ==> ; <RunableCode> <H>   CSDO 
+													;      
+													<RunableCode> ==> <Read>   CSDO 
+														<Read> ==> read ( <ID> <K> )   CSDO TESTDEF(2)
+															read      
+															(      
+															<ID> ==> <Alpha> <F>   CSDO 
+																<Alpha> ==> b   CSDO 
+																	b      
+																<F> ==>    CSDO 
+															<K> ==>    CSDO 
+															)      
+													<H> ==> ; <RunableCode> <H>   CSDO 
+														;      
+														<RunableCode> ==>    CSDO 
+														<H> ==>    CSDO POPTABLE
+											end      
+							<H> ==>    CSDO POPTABLE
+						end      
