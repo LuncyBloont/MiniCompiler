@@ -1,4 +1,4 @@
-<Program> ==> <SubProgram>									CSDO MKMEM
+<Program> ==> <SubProgram>									CSDO *MKMEM
 
 # <SubProgram> ==> [<ConstVar>][<NormalVar>][<FunctionVar>]<RunableCode>
 <SubProgram> ==> <ConstVar> <A>|<A>					CSDO TABLE|TABLE
@@ -51,14 +51,15 @@
 <RelationalOps> ==> =|#|<|<=|>|>=							CSDO
 <Condition> ==> if <ConditionExpression> then <RunableCode>						CSDO
 <Call> ==> call <ID>							CSDO TESTDEF(1)
-<WhileLoop> ==> while <ConditionExpression> do <RunableCode>					CSDO     
+<WhileLoop> ==> while <ConditionExpression> do <RunableCode>					CSDO *MARKLOOP  
 
 # <Read> ==> read(<ID>{,<ID>})
-<Read> ==> read ( <ID> <K> )						CSDO TESTDEF(2)
-<K> ==> __0__|, <ID> <K>							CSDO |TESTNDEF(1)
+<Read> ==> read ( <ID> <K> )						CSDO TESTDEF(2) *READ(2)
+<K> ==> __0__|, <ID> <K>							CSDO |TESTNDEF(1) *READ(1)
 
 # <Write> ==> write(<ID>{,<ID>})
-<Write> ==> write ( <ID> <K> )						CSDO TESTDEF(2)
+<Write> ==> write ( <ID> <L> )						CSDO TESTDEF(2) *WRITE(2)
+<L> ==> __0__|, <ID> <L>							CSDO |TESTNDEF(1) *WRITE(1)
 
 <Alpha> ==> a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z    CSDO
 <SingleNumber> ==> 0|1|2|3|4|5|6|7|8|9							CSDO

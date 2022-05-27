@@ -38,8 +38,8 @@ public:
 	void start(std::istream& input, std::ostream& output);
 	void analyze(const PNode* root, int sp = 0);
 
-	void runMiniProg(const PNode* node, const std::string& code);
-	void call(const PNode* node, const std::string& func, const std::vector<std::string>& args);
+	void runMiniProg(const PNode* node, const std::string& code, bool start);
+	void call(const PNode* node, const std::string& func, const std::vector<std::string>& args, bool start);
 	
 private:
 	const std::map<std::string, GrammarAnalyzer::V>& G;
