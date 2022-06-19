@@ -1,7 +1,7 @@
 <Program> ==> <SubProgram>									CSDO *MKMEM
 
 # <SubProgram> ==> [<ConstVar>][<NormalVar>][<FunctionVar>]<RunableCode>
-<SubProgram> ==> <ConstVar> <A>|<A>					CSDO TABLE|TABLE
+<SubProgram> ==> <ConstVar> <A>|<A>					CSDO TABLE $POPTABLE|TABLE $POPTABLE
 <A> ==> <NormalVar> <B>|<B>						CSDO
 <B> ==> <FunctionVar> <RunableCode>|<RunableCode>					CSDO
 
@@ -24,34 +24,34 @@
 <F> ==> __0__|<Alpha> <F>|<SingleNumber> <F>					CSDO
 
 # <FunctionVar> ==> <FunctionHead><SubProgram>;{<FunctionVar>}
-<FunctionVar> ==> <FunctionHead> <SubProgram> ; <G>				CSDO
-<G> ==> __0__|<FunctionHead> <SubProgram> ; <G>					CSDO POPTABLE|
+<FunctionVar> ==> <FunctionHead> <SubProgram> ; <G>				CSDO $RESPC
+<G> ==> __0__|<FunctionHead> <SubProgram> ; <G>					CSDO |$RESPC
 
 <FunctionHead> ==> procedure <ID> ;						CSDO TESTNDEF(1) DEFF(1)
 <RunableCode> ==> <Set>|<Condition>|<WhileLoop>|<Call>|<Read>|<Write>|<MultiCode>|__0__     CSDO
-<Set> ==> <ID> := <Expression>						CSDO TESTDEF(0) TESTM(0)
+<Set> ==> <ID> := <Expression>						CSDO TESTDEF(0) TESTM(0) *RG $SET(0) $POPRG
 
 # <MultiCode> ==> begin<RunableCode>{ ;<RunableCode>}end
 <MultiCode> ==> begin <RunableCode> <H> end						CSDO TABLE
 <H> ==> __0__|; <RunableCode> <H>								CSDO POPTABLE|
 
-<ConditionExpression> ==> <Expression> <RelationalOps> <Expression>|odd <Expression>     CSDO
+<ConditionExpression> ==> <Expression> <RelationalOps> <Expression>|odd <Expression>     CSDO *RG $CMP $POPRG $POPRG|*RG $ODD $POPRG
 
 # <Expression> ==> [+|-]<Item>{<AddOrSub><Item>}
-<Expression> ==> + <Item> <I>|- <Item> <I>|<Item> <I>				CSDO
-<I> ==> __0__|<AddOrSub> <Item> <I>						CSDO
+<Expression> ==> + <Item> <I>|- <Item> <I>|<Item> <I>				CSDO $WTOPTOBTOP|$INVRG $WTOPTOBTOP|$WTOPTOBTOP
+<I> ==> __0__|<AddOrSub> <Item> <I>						CSDO |*RG $OP(0) $POPRG
 
 # <Item> ==> <Factor>{<MulOrDiv><Factor>}
-<Item> ==> <Factor> <J>										CSDO
-<J> ==> __0__|<MulOrDiv> <Factor> <J>						CSDO
+<Item> ==> <Factor> <J>										CSDO $POPRG
+<J> ==> __0__|<MulOrDiv> <Factor> <J>						CSDO |*RG $OP(0) $POPRG
 
-<Factor> ==> <ID>|<UInt>|( <Expression> )				CSDO TESTDEF(0)||
+<Factor> ==> <ID>|<UInt>|( <Expression> )				CSDO TESTDEF(0) *WRG(0)|*WRGI(0)|*RG
 <AddOrSub> ==> +|-										CSDO
 <MulOrDiv> ==> *|/										CSDO
 <RelationalOps> ==> =|#|<|<=|>|>=							CSDO
-<Condition> ==> if <ConditionExpression> then <RunableCode>						CSDO
-<Call> ==> call <ID>							CSDO TESTDEF(1)
-<WhileLoop> ==> while <ConditionExpression> do <RunableCode>					CSDO *MARKLOOP  
+<Condition> ==> if <ConditionExpression> then <RunableCode>						CSDO *RG *CODEADDR *JP $WADRRTOCODEADDR $POPCODEADRR
+<Call> ==> call <ID>							CSDO TESTDEF(1) *SAVEPC *CALL(1)
+<WhileLoop> ==> while <ConditionExpression> do <RunableCode>					CSDO *RG *J *CODEADDR *ADRR $WADRRTOCODEADDR $POPCODEADRR $JP 
 
 # <Read> ==> read(<ID>{,<ID>})
 <Read> ==> read ( <ID> <K> )						CSDO TESTDEF(2) *READ(2)

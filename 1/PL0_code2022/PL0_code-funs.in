@@ -5,7 +5,7 @@ procedure p;
       const c = 35;
       var a, x;
     begin
-      // c := 12;
+      // c := 12; // test const
       x := 6;
       a := a * c + x;
       if a <= 1024 then

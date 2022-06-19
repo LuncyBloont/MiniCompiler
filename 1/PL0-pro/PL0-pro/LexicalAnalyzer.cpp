@@ -30,7 +30,7 @@ void LexicalAnalyzer::start(std::istream& input, std::ostream& output, const PL0
 		size_t lpos = lineStart[error.lineStart];
 		size_t lsize = lineSize[error.lineStart];
 		std::string errstr = raw.substr(lpos, lsize);
-		std::cerr << "ERROR at line " << error.pos << " (" << lpos << ", " << lsize << "): " << errstr << "\n";
+		std::cerr << "ERROR at line " << error.pos + 1 << ": " << errstr << "\n";
 		exit(-1);
 	} else {
 		output << buffer;
@@ -122,7 +122,7 @@ void LexicalAnalyzer::analyze() {
 				i++;
 			} while (std::isalnum(buffer[i]));
 			i--;
-			result.append(wordBuffer + " " + getSYM() + "\n");
+			result.append(wordBuffer + " " + getSYM() + " " + std::to_string(wordLPos + 1) + "\n");
 			wordBuffer.clear();
 		} else if (buffer[i] == ' ') {
 			continue;
@@ -132,19 +132,19 @@ void LexicalAnalyzer::analyze() {
 				i++;
 			} while (std::isalnum(buffer[i]));
 			i--;
-			result.append(wordBuffer + " " + getSYM() + "\n");
+			result.append(wordBuffer + " " + getSYM() + " " + std::to_string(wordLPos + 1) + "\n");
 			wordBuffer.clear();
 		} else {
 			wordBuffer.push_back(buffer[i]);
 			if (boundary.find(wordBuffer) != boundary.end()) {
-				result.append(wordBuffer + " " + getSYM() + "\n");
+				result.append(wordBuffer + " " + getSYM() + " " + std::to_string(wordLPos + 1) + "\n");
 				wordBuffer.clear();
 			} else {
 				while (i < buffer.size() && operators.find(wordBuffer + buffer[i + 1]) != operators.end()) {
 					wordBuffer.push_back(buffer[i + 1]);
 					i++;
 				}
-				result.append(wordBuffer + " " + getSYM() + "\n");
+				result.append(wordBuffer + " " + getSYM() + " " + std::to_string(wordLPos + 1) + "\n");
 				wordBuffer.clear();
 			}
 		}

@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Code4Filter.cpp" />
+    <ClCompile Include="Code4Runner.cpp" />
     <ClCompile Include="GrammarAnalyzer.cpp" />
     <ClCompile Include="LexicalAnalyzer.cpp" />
     <ClCompile Include="PL0-pro.cpp" />
@@ -147,8 +149,9 @@
     <ClCompile Include="split.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Code4Filter.h" />
+    <ClInclude Include="Code4Runner.h" />
     <ClInclude Include="debug.h" />
-    <ClInclude Include="grammar.h" />
     <ClInclude Include="GrammarAnalyzer.h" />
     <ClInclude Include="LexicalAnalyzer.h" />
     <ClInclude Include="PL0.h" />
@@ -157,6 +160,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="debug.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="pl0\Grammar.txt" />
+    <Text Include="pl0\idname.txt" />
+    <Text Include="pl0\keys.txt" />
+    <Text Include="pl0\numbers.txt" />
+    <Text Include="pl0\ops.txt" />
+    <Text Include="pl0\sign.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

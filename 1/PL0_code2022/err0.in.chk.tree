@@ -1,0 +1,271 @@
+0 <Program> ==> <SubProgram>   CSDO *MKMEM
+	1 <SubProgram> ==> <ConstVar> <A>   CSDO TABLE $POPTABLE $JBACK
+		1 <ConstVar> ==> const <ConstDefine> <C> ;   CSDO 
+			1 const      
+			1 <ConstDefine> ==> <ID> = <UInt>   CSDO TESTNDEF(0) DEFC(0,2)
+				1 <ID> ==> <Alpha> <F>   CSDO 
+					1 <Alpha> ==> a   CSDO 
+						1 a      
+					1 <F> ==>    CSDO 
+				1 =      
+				1 <UInt> ==> <SingleNumber> <D>   CSDO 
+					1 <SingleNumber> ==> 1   CSDO 
+						1 1      
+					1 <D> ==> <SingleNumber> <D>   CSDO 
+						1 <SingleNumber> ==> 0   CSDO 
+							1 0      
+						1 <D> ==>    CSDO 
+			1 <C> ==>    CSDO 
+			1 ;      
+		1 <A> ==> <NormalVar> <B>   CSDO 
+			2 <NormalVar> ==> var <ID> <E> ;   CSDO TESTNDEF(1) DEF(1)
+				2 var      
+				2 <ID> ==> <Alpha> <F>   CSDO 
+					2 <Alpha> ==> d   CSDO 
+						2 d      
+					2 <F> ==>    CSDO 
+				2 <E> ==> , <ID> <E>   CSDO TESTNDEF(1) DEF(1)
+					2 ,      
+					2 <ID> ==> <Alpha> <F>   CSDO 
+						2 <Alpha> ==> e   CSDO 
+							2 e      
+						2 <F> ==>    CSDO 
+					2 <E> ==> , <ID> <E>   CSDO TESTNDEF(1) DEF(1)
+						2 ,      
+						2 <ID> ==> <Alpha> <F>   CSDO 
+							2 <Alpha> ==> f   CSDO 
+								2 f      
+							2 <F> ==>    CSDO 
+						2 <E> ==>    CSDO 
+				2 ;      
+			2 <B> ==> <FunctionVar> <RunableCode>   CSDO 
+				3 <FunctionVar> ==> <FunctionBody> ; <G>   CSDO $RESPC
+					3 <FunctionBody> ==> <FunctionHead> <SubProgram>   CSDO *CODEADDR *J $WADRRTOCODEADDR(0) $POPCODEADRR
+						3 <FunctionHead> ==> procedure <ID> ;   CSDO TESTNDEF(1) DEFF(1) *WCODEADDRTOSYM(1)
+							3 procedure      
+							3 <ID> ==> <Alpha> <F>   CSDO 
+								3 <Alpha> ==> p   CSDO 
+									3 p      
+								3 <F> ==>    CSDO 
+							3 ;      
+						3 <SubProgram> ==> <A>   CSDO TABLE $POPTABLE $JBACK
+							4 <A> ==> <NormalVar> <B>   CSDO 
+								4 <NormalVar> ==> var <ID> <E> ;   CSDO TESTNDEF(1) DEF(1)
+									4 var      
+									4 <ID> ==> <Alpha> <F>   CSDO 
+										4 <Alpha> ==> g   CSDO 
+											4 g      
+										4 <F> ==>    CSDO 
+									4 <E> ==>    CSDO 
+									4 ;      
+								4 <B> ==> <RunableCode>   CSDO 
+									5 <RunableCode> ==> <MultiCode>   CSDO 
+										5 <MultiCode> ==> begin <RunableCode> <H> end   CSDO TABLE
+											5 begin      
+											5 <RunableCode> ==> <Set>   CSDO 
+												6 <Set> ==> <ID> := <Expression>   CSDO TESTDEF(0) TESTM(0) $SET(0) $POPRG
+													6 <ID> ==> <Alpha> <F>   CSDO 
+														6 <Alpha> ==> d   CSDO 
+															6 d      
+														6 <F> ==>    CSDO 
+													6 :=      
+													6 <Expression> ==> <Item> <I>   CSDO *RG $WTOPTOBTOP $POPRG
+														6 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+															6 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																6 <ID> ==> <Alpha> <F>   CSDO 
+																	6 <Alpha> ==> a   CSDO 
+																		6 a      
+																	6 <F> ==>    CSDO 
+															6 <J> ==> <MulOrDiv> <Factor> <J>   CSDO $OP(0) $POPRG
+																6 <MulOrDiv> ==> *   CSDO 
+																	6 *      
+																6 <Factor> ==> <UInt>   CSDO *RG *WRGI(0)
+																	6 <UInt> ==> <SingleNumber> <D>   CSDO 
+																		6 <SingleNumber> ==> 2   CSDO 
+																			6 2      
+																		6 <D> ==>    CSDO 
+																6 <J> ==>    CSDO 
+														6 <I> ==>    CSDO 
+											5 <H> ==> ; <RunableCode> <H>   CSDO 
+												6 ;      
+												6 <RunableCode> ==> <Set>   CSDO 
+													7 <Set> ==> <ID> := <Expression>   CSDO TESTDEF(0) TESTM(0) $SET(0) $POPRG
+														7 <ID> ==> <Alpha> <F>   CSDO 
+															7 <Alpha> ==> e   CSDO 
+																7 e      
+															7 <F> ==>    CSDO 
+														7 :=      
+														7 <Expression> ==> <Item> <I>   CSDO *RG $WTOPTOBTOP $POPRG
+															7 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+																7 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																	7 <ID> ==> <Alpha> <F>   CSDO 
+																		7 <Alpha> ==> a   CSDO 
+																			7 a      
+																		7 <F> ==>    CSDO 
+																7 <J> ==> <MulOrDiv> <Factor> <J>   CSDO $OP(0) $POPRG
+																	7 <MulOrDiv> ==> /   CSDO 
+																		7 /      
+																	7 <Factor> ==> <UInt>   CSDO *RG *WRGI(0)
+																		7 <UInt> ==> <SingleNumber> <D>   CSDO 
+																			7 <SingleNumber> ==> 3   CSDO 
+																				7 3      
+																			7 <D> ==>    CSDO 
+																	7 <J> ==>    CSDO 
+															7 <I> ==>    CSDO 
+												6 <H> ==> ; <RunableCode> <H>   CSDO 
+													7 ;      
+													7 <RunableCode> ==> <Condition>   CSDO 
+														8 <Condition> ==> if <IfCondition> then <RunableCode>   CSDO $WADRRTOCODEADDR(0) $POPCODEADRR
+															8 if      
+															8 <IfCondition> ==> <ConditionExpression>   CSDO $CODEADDR $JNP
+																8 <ConditionExpression> ==> <Expression> <RelationalOps> <Expression>   CSDO *RG $CMP(1) $POPRG $POPRG
+																	8 <Expression> ==> <Item> <I>   CSDO *RG $WTOPTOBTOP $POPRG
+																		8 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+																			8 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																				8 <ID> ==> <Alpha> <F>   CSDO 
+																					8 <Alpha> ==> d   CSDO 
+																						8 d      
+																					8 <F> ==>    CSDO 
+																			8 <J> ==>    CSDO 
+																		8 <I> ==>    CSDO 
+																	8 <RelationalOps> ==> <=   CSDO 
+																		8 <=      
+																	8 <Expression> ==> <Item> <I>   CSDO *RG $WTOPTOBTOP $POPRG
+																		8 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+																			8 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																				8 <ID> ==> <Alpha> <F>   CSDO 
+																					8 <Alpha> ==> e   CSDO 
+																						8 e      
+																					8 <F> ==>    CSDO 
+																			8 <J> ==>    CSDO 
+																		8 <I> ==>    CSDO 
+															8 then      
+															8 <RunableCode> ==> <Set>   CSDO 
+																8 <Set> ==> <ID> := <Expression>   CSDO TESTDEF(0) TESTM(0) $SET(0) $POPRG
+																	8 <ID> ==> <Alpha> <F>   CSDO 
+																		8 <Alpha> ==> f   CSDO 
+																			8 f      
+																		8 <F> ==>    CSDO 
+																	8 :=      
+																	8 <Expression> ==> <Item> <I>   CSDO *RG $WTOPTOBTOP $POPRG
+																		8 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+																			8 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																				8 <ID> ==> <Alpha> <F>   CSDO 
+																					8 <Alpha> ==> d   CSDO 
+																						8 d      
+																					8 <F> ==>    CSDO 
+																			8 <J> ==>    CSDO 
+																		8 <I> ==> <AddOrSub> <Item> <I>   CSDO $OP(0) $POPRG
+																			8 <AddOrSub> ==> +   CSDO 
+																				8 +      
+																			8 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+																				8 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																					8 <ID> ==> <Alpha> <F>   CSDO 
+																						8 <Alpha> ==> e   CSDO 
+																							8 e      
+																						8 <F> ==>    CSDO 
+																				8 <J> ==>    CSDO 
+																			8 <I> ==>    CSDO 
+													7 <H> ==>    CSDO POPTABLE
+											5 end      
+					3 ;      
+					3 <G> ==>    CSDO 
+				3 <RunableCode> ==> <MultiCode>   CSDO 
+					10 <MultiCode> ==> begin <RunableCode> <H> end   CSDO TABLE
+						10 begin      
+						10 <RunableCode> ==> <Read>   CSDO 
+							11 <Read> ==> read ( <ID> <K> )   CSDO TESTDEF(2) *CREAD(2)
+								11 read      
+								11 (      
+								11 <ID> ==> <Alpha> <F>   CSDO 
+									11 <Alpha> ==> e   CSDO 
+										11 e      
+									11 <F> ==>    CSDO 
+								11 <K> ==> , <ID> <K>   CSDO TESTNDEF(1) *CREAD(1)
+									11 ,      
+									11 <ID> ==> <Alpha> <F>   CSDO 
+										11 <Alpha> ==> f   CSDO 
+											11 f      
+										11 <F> ==>    CSDO 
+									11 <K> ==>    CSDO 
+								11 )      
+						10 <H> ==> ; <RunableCode> <H>   CSDO 
+							11 ;      
+							11 <RunableCode> ==> <Write>   CSDO 
+								12 <Write> ==> write ( <ID> <L> )   CSDO TESTDEF(2) *CWRITE(2)
+									12 write      
+									12 (      
+									12 <ID> ==> <Alpha> <F>   CSDO 
+										12 <Alpha> ==> e   CSDO 
+											12 e      
+										12 <F> ==>    CSDO 
+									12 <L> ==> , <ID> <L>   CSDO TESTNDEF(1) *CWRITE(1)
+										12 ,      
+										12 <ID> ==> <Alpha> <F>   CSDO 
+											12 <Alpha> ==> f   CSDO 
+												12 f      
+											12 <F> ==>    CSDO 
+										12 <L> ==> , <ID> <L>   CSDO TESTNDEF(1) *CWRITE(1)
+											12 ,      
+											12 <ID> ==> <Alpha> <F>   CSDO 
+												12 <Alpha> ==> d   CSDO 
+													12 d      
+												12 <F> ==>    CSDO 
+											12 <L> ==>    CSDO 
+									12 )      
+							11 <H> ==> ; <RunableCode> <H>   CSDO 
+								12 ;      
+								12 <RunableCode> ==> <Call>   CSDO 
+									13 <Call> ==> call <ID>   CSDO TESTDEF(1) *SAVEPC *CODEADDR *J *WCODEADDR(1) $POPCODEADRR
+										13 call      
+										13 <ID> ==> <Alpha> <F>   CSDO 
+											13 <Alpha> ==> p   CSDO 
+												13 p      
+											13 <F> ==>    CSDO 
+								12 <H> ==> ; <RunableCode> <H>   CSDO 
+									13 ;      
+									13 <RunableCode> ==> <WhileLoop>   CSDO 
+										14 <WhileLoop> ==> while <WhileCondition> do <RunableCode>   CSDO $WADRRTOCODEADDR(1) $POPCODEADRR $J $USEPREADDR $POPPREADRR
+											14 while      
+											14 <WhileCondition> ==> <ConditionExpression>   CSDO *WPREADDR(0) $CODEADDR $JNP
+												14 <ConditionExpression> ==> odd <Expression>   CSDO *RG $ODD $POPRG
+													14 odd      
+													14 <Expression> ==> <Item> <I>   CSDO *RG $WTOPTOBTOP $POPRG
+														14 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+															14 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																14 <ID> ==> <Alpha> <F>   CSDO 
+																	14 <Alpha> ==> d   CSDO 
+																		14 d      
+																	14 <F> ==>    CSDO 
+															14 <J> ==>    CSDO 
+														14 <I> ==>    CSDO 
+											14 do      
+											14 <RunableCode> ==> <Set>   CSDO 
+												14 <Set> ==> <ID> := <Expression>   CSDO TESTDEF(0) TESTM(0) $SET(0) $POPRG
+													14 <ID> ==> <Alpha> <F>   CSDO 
+														14 <Alpha> ==> e   CSDO 
+															14 e      
+														14 <F> ==>    CSDO 
+													14 :=      
+													14 <Expression> ==> - <Item> <I>   CSDO *RG $INVRG $WTOPTOBTOP $POPRG
+														14 -      
+														14 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+															14 <Factor> ==> <ID>   CSDO TESTDEF(0) *RG *WRG(0)
+																14 <ID> ==> <Alpha> <F>   CSDO 
+																	14 <Alpha> ==> e   CSDO 
+																		14 e      
+																	14 <F> ==>    CSDO 
+															14 <J> ==>    CSDO 
+														14 <I> ==> <AddOrSub> <Item> <I>   CSDO $OP(0) $POPRG
+															14 <AddOrSub> ==> +   CSDO 
+																14 +      
+															14 <Item> ==> <Factor> <J>   CSDO *RG $WTOPTOBTOP $POPRG
+																14 <Factor> ==> <UInt>   CSDO *RG *WRGI(0)
+																	14 <UInt> ==> <SingleNumber> <D>   CSDO 
+																		14 <SingleNumber> ==> 1   CSDO 
+																			14 1      
+																		14 <D> ==>    CSDO 
+																14 <J> ==>    CSDO 
+															14 <I> ==>    CSDO 
+									13 <H> ==>    CSDO POPTABLE
+						10 end      

@@ -2,25 +2,27 @@
 //
 
 #include <iostream>
+#include <string>
+#include <fstream>
 #include "PL0.h"
-#include "grammar.h"
 
 int main(int argc, char** argv)
 {
     uint32_t stage = 0;
-    
-    PL0 compiler("const CONSTSYM var VARSYM procedure PROCEDURESYM begin BEGINSYM odd ODD "
-        "end ENDSYM if IFSYM then THENSYM call CALLSYM while WHILESYM do DOSYM read READSYM write WRITESYM",
-        "= EQUAL := ASSIGN + ADD - SUB * MUL / DIV # NOTEQL < LT <= LTOREQ > GT >= GTOREQ",
-        ". END , COM ; SEMI ( LPARE ) RPARE", "NUMBER 0 1 2 3 4 5 6 7 8 9", "IDENT", Grammar_0); 
 
-    /*PL0 compiler("a abcA b abcB",
-        "* MUL + ADD @ AND",
-        "( LPARE ) RPARE", "NUMBER 0 1 2 3 4 5 6 7 8 9", "IDENT", Grammar_0);*/
-
-    /*PL0 compiler("i ID",
-        "* MUL + ADD",
-        "( LPARE ) RPARE", "NUMBER 0 1 2 3 4 5 6 7 8 9", "IDENT", Grammar_0);*/
+    std::ifstream fkeys("pl0\\keys.txt");
+    std::string keys((std::istreambuf_iterator<char>(fkeys)), std::istreambuf_iterator<char>());
+    std::ifstream fops("pl0\\ops.txt");
+    std::string ops((std::istreambuf_iterator<char>(fops)), std::istreambuf_iterator<char>());
+    std::ifstream fsign("pl0\\sign.txt");
+    std::string sign((std::istreambuf_iterator<char>(fsign)), std::istreambuf_iterator<char>());
+    std::ifstream fnum("pl0\\numbers.txt");
+    std::string numbers((std::istreambuf_iterator<char>(fnum)), std::istreambuf_iterator<char>());
+    std::ifstream fidname("pl0\\idname.txt");
+    std::string idname((std::istreambuf_iterator<char>(fidname)), std::istreambuf_iterator<char>());
+    std::ifstream fgrammar("pl0\\Grammar.txt");
+    std::string grammer((std::istreambuf_iterator<char>(fgrammar)), std::istreambuf_iterator<char>());
+    PL0 compiler(keys, ops, sign, numbers, idname, grammer);
 
     if (argc <= 1) {
         compiler.run(stage);

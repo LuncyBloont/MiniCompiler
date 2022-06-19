@@ -33,8 +33,9 @@ public:
 		const V* v;
 		std::list<TreeNode*> children;
 		TreeNode* parent;
+		int line = 0;
 		
-		TreeNode(const V* v = nullptr, TreeNode* const p = nullptr): v(v), parent(p) {}
+		TreeNode(int line, const V* v = nullptr, TreeNode* const p = nullptr): v(v), parent(p), line(line) {}
 		~TreeNode() {
 			for (auto& node : children) {
 				delete node;
@@ -42,6 +43,7 @@ public:
 		}
 		TreeNode& operator =(const TreeNode& other) {
 			v = other.v;
+			line = other.line;
 			for (auto& node : other.children) {
 				children.push_back(new TreeNode(*node));
 			}

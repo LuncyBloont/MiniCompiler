@@ -1,0 +1,75 @@
+<Program> ==> <SubProgram>									CSDO *MKMEM
+# the entrance of program
+
+<SubProgram> ==> <ConstVar> <A>|<A>					CSDO TABLE $POPTABLE $JBACK|TABLE $POPTABLE $JBACK
+<A> ==> <NormalVar> <B>|<B>						CSDO
+<B> ==> <FunctionVar> <RunableCode>|<RunableCode>					CSDO
+
+<ConstVar> ==> const <ConstDefine> <C> ;           	CSDO
+<C> ==> __0__|, <ConstDefine> <C>                     	CSDO
+
+<ConstDefine> ==> <ID> = <UInt>					CSDO TESTNDEF(0) DEFC(0,2)
+
+<UInt> ==> <SingleNumber> <D>                        	CSDO 
+<D> ==> __0__|<SingleNumber> <D>								CSDO
+		
+<NormalVar> ==> var <ID> <E> ;					CSDO TESTNDEF(1) DEF(1)
+<E> ==> __0__|, <ID> <E>							CSDO |TESTNDEF(1) DEF(1)
+
+<ID> ==> <Alpha> <F>								CSDO
+<F> ==> __0__|<Alpha> <F>|<SingleNumber> <F>					CSDO
+
+<FunctionVar> ==> <FunctionBody> ; <G>				CSDO $RESPC
+<G> ==> __0__|<FunctionBody> ; <G>					CSDO |$RESPC
+
+<FunctionBody> ==> <FunctionHead> <SubProgram>			CSDO *CODEADDR *J $WADRRTOCODEADDR(0) $POPCODEADRR
+
+<FunctionHead> ==> procedure <ID> ;						CSDO TESTNDEF(1) DEFF(1) *WCODEADDRTOSYM(1)
+<RunableCode> ==> <Set>|<Condition>|<WhileLoop>|<Call>|<Read>|<Write>|<MultiCode>|__0__     CSDO
+<Set> ==> <ID> := <Expression>						CSDO TESTDEF(0) TESTM(0) $SET(0) $POPRG
+
+<MultiCode> ==> begin <RunableCode> <H> end						CSDO TABLE
+<H> ==> __0__|; <RunableCode> <H>								CSDO POPTABLE|
+
+<ConditionExpression> ==> <Expression> <RelationalOps> <Expression>|odd <Expression>     CSDO *RG $CMP(1) $POPRG $POPRG|*RG $ODD $POPRG
+# 申请一个内存用于存比较结果，比较时栈顶是两个操作数（两个表达式申请的两个内存），完成比较写入第三个变量，弹出前两个。
+# 第二路线同理类比，比较操作值射击一个操作数。
+
+<Expression> ==> + <Item> <I>|- <Item> <I>|<Item> <I>				CSDO *RG $WTOPTOBTOP $POPRG|*RG $INVRG $WTOPTOBTOP $POPRG|*RG $WTOPTOBTOP $POPRG
+# 表达式，申请一个内存存结果，结束时将Item申请的内存写入结果内存，弹出Item申请的内存。
+
+<I> ==> __0__|<AddOrSub> <Item> <I>						CSDO |$OP(0) $POPRG
+# 连加减，不申请内存，将前一个Item的内存（次栈顶）和Item申请的内存（栈顶）运算，写入次栈顶，弹出栈顶。
+
+<Item> ==> <Factor> <J>										CSDO *RG $WTOPTOBTOP $POPRG
+# 将栈顶（Factor的结果）写入次栈顶，弹出栈顶。
+
+<J> ==> __0__|<MulOrDiv> <Factor> <J>						CSDO |$OP(0) $POPRG
+# 连乘除，不申请内存，将前一个Item的内存（次栈顶）和Item申请的内存（栈顶）运算，写入次栈顶，弹出栈顶。
+
+<Factor> ==> <ID>|<UInt>|( <Expression> )				CSDO TESTDEF(0) *RG *WRG(0)|*RG *WRGI(0)|*RG $WTOPTOBTOP $POPRG
+# 线路1、2，申请栈，写入变量值或数值；线路3，申请栈，将表达式申请的结果栈内容写入这个栈，弹出表达式结果栈。
+
+<AddOrSub> ==> +|-										CSDO
+<MulOrDiv> ==> *|/										CSDO
+<RelationalOps> ==> =|#|<|<=|>|>=							CSDO
+
+<Condition> ==> if <IfCondition> then <RunableCode>						CSDO $WADRRTOCODEADDR(0) $POPCODEADRR
+<IfCondition> ==> <ConditionExpression>										CSDO $CODEADDR $JNP
+# （编译时开一个地址缓存栈，记录跳转指令位置）根据内存栈顶数据进行跳转，弹出栈顶。（展开分支代码后记录地址，补全栈顶的跳转指令，弹出地址缓存栈）
+
+<Call> ==> call <ID>							CSDO TESTDEF(1) *SAVEPC *CODEADDR *J *WCODEADDR(1) $POPCODEADRR
+# （申请地址缓存栈，写入函数地址）无条件跳转。（弹出地址缓存栈）
+
+<WhileLoop> ==> while <WhileCondition> do <RunableCode>					CSDO $WADRRTOCODEADDR(1) $POPCODEADRR $J $USEPREADDR $POPPREADRR
+<WhileCondition> ==> <ConditionExpression>									CSDO *WPREADDR(0) $CODEADDR $JNP 
+
+<Read> ==> read ( <ID> <K> )						CSDO TESTDEF(2) *CREAD(2)
+<K> ==> __0__|, <ID> <K>							CSDO |TESTNDEF(1) *CREAD(1)
+
+<Write> ==> write ( <ID> <L> )						CSDO TESTDEF(2) *CWRITE(2)
+<L> ==> __0__|, <ID> <L>							CSDO |TESTNDEF(1) *CWRITE(1)
+
+<Alpha> ==> a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z    CSDO
+<SingleNumber> ==> 0|1|2|3|4|5|6|7|8|9							CSDO
+

@@ -145,15 +145,18 @@ void PL0::makeGrammarTable(const std::string& Gstr) {
 		while (true) {
 			if (indice > Gstr.size()) { break; }
 			if (Gstr[indice] == '\n') { break; }
+
 			if (!start && Gstr[indice] == '#') { ignore = true; }
-			if (!start && Gstr[indice] != ' ' && Gstr[indice] != '\t') {
+			else if (!start && Gstr[indice] != ' ' && Gstr[indice] != '\t') {
 				start = true;
 			}
+
 			indice += 1;
 		}
 
-		if (!ignore && indice > lindice) {
+		if (!ignore && indice > lindice && start) {
 			std::string line = Gstr.substr(lindice, indice - lindice).data();
+			PERR("[%s]\n", line.data());
 			size_t mid = line.find(TRANS_SIGN);
 			size_t opspos = line.find(OPS_SIGN);
 
@@ -500,7 +503,7 @@ void PL0::outputTree(const GrammarAnalyzer::StepResult& result) {
 		}
 		delblank(right);
 		PERR("[%s][%s]: {%s}\n", t->v->value.data(), right.data(), rules.find({ t->v->value, right }) != rules.end() ? rules.at({ t->v->value, right }).data() : "");
-		printf("%s %s %s   %s %s%s", 
+		printf("%d %s %s %s   %s %s%s", t->line,
 			t->v->value.data(), 
 			t->v->type == GrammarAnalyzer::Type::NonTerminal ? TRANS_SIGN : "",
 			t->v->type == GrammarAnalyzer::Type::NonTerminal ? right.data() : "",

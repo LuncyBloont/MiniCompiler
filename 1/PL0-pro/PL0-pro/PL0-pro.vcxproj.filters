@@ -33,6 +33,12 @@
     <ClCompile Include="SemanticAnalyzer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Code4Runner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Code4Filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PL0.h">
@@ -47,17 +53,31 @@
     <ClInclude Include="GrammarAnalyzer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="grammar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="split.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SemanticAnalyzer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Code4Runner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Code4Filter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="debug.bat">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="pl0\Grammar.txt" />
+    <Text Include="pl0\idname.txt" />
+    <Text Include="pl0\keys.txt" />
+    <Text Include="pl0\numbers.txt" />
+    <Text Include="pl0\ops.txt" />
+    <Text Include="pl0\sign.txt" />
   </ItemGroup>
 </Project>
